@@ -1,0 +1,56 @@
+CREATE TABLE t_cliente (
+id_cliente NUMBER(4) NOT NULL,
+nm_cliente    VARCHAR2(50) NOT NULL,
+ds_email   VARCHAR2(255) NOT NULL,
+nr_telefone   INTEGER NOT NULL
+);
+CREATE sequence sq_t_cliente start with 1 increment by 1;
+
+INSERT INTO t_cliente
+    VALUES (sq_t_cliente.NEXTVAL, 'João', 'joaozinho@teste.com.br', 111111;
+
+-----------------------------------------------
+
+CREATE TABLE t_viagem (
+id_viagem NUMBER(4) NOT NULL,
+ds_endereco   VARCHAR2(255) NOT NULL,
+nr_pessoas   INTEGER NOT NULL
+);
+INSERT INTO t_viagem
+    VALUES (sq_t_viagem.NEXTVAL, 'Portugal', 2);
+
+-----------------------------------------------
+
+CREATE TABLE t_cadastro (
+id_usuario NUMBER(4) NOT NULL,
+nm_usuario    VARCHAR2(50) NOT NULL,
+ds_email   VARCHAR2(255) NOT NULL,
+ds_senha  VARCHAR2(255) NOT NULL,
+dt_cadastro DATETIME NOT NULL,
+dt_atualizacao DATETIME NOT NULL,
+);
+
+INSERT INTO t_cadastro
+    VALUES (sq_t_cadastro.NEXTVAL, 'Nicolas', 'nicolas@fiap.com', '123', '2022/10/10', '2022/11/11');
+
+-----------------------------------------------
+
+--PROCEDURE adicionar
+CREATE OR REPLACE PROCEDURE add_viagem (
+ l_id t_viagem.id_viagem%TYPE,
+ l_endereco t_viagem.ds_endereco%TYPE,
+ l_nrpessoas t_viagem.nr_pessoas%TYPE) IS
+BEGIN
+INSERT INTO t_livro (id_viagem, ds_endereco, nr_pessoas)
+VALUES (l_id, l_endereco, l_nrpessoas);
+ COMMIT;
+EXCEPTION
+    WHEN VALUE_ERROR THEN
+    DBMS_OUTPUT.PUT_LINE('Por favor, insira os valores corretos');
+    WHEN PROGRAM_ERROR THEN
+    DBMS_OUTPUT.PUT_LINE('Ocorreu um erro que n�o conseguimos identificar, tente novamente ou entre em contato com o suporte');
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Erro na execu��o da fun��o.');
+END add_viagem;
+/
+EXECUTE add_viagem (50, 'França', 4);
